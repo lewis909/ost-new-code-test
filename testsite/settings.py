@@ -79,10 +79,7 @@ WSGI_APPLICATION = 'testsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres' if DOCKER else '',
-        'HOST': 'postgresql',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': 'postgres',
     }
 }
 
@@ -124,3 +121,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STARSHIP_API_URL = 'https://swapi.co/api/starships/'
