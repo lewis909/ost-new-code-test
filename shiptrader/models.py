@@ -12,8 +12,14 @@ class Starship(models.Model):
     crew = models.IntegerField()
     passengers = models.IntegerField()
 
+    def __str__(self):
+        return self.starship_class
+
 
 class Listing(models.Model):
     name = models.CharField(max_length=255)
     ship_type = models.ForeignKey(Starship, related_name='listings')
     price = models.IntegerField()
+
+    def __str__(self):
+        return "{}-{}-{}".format(self.pk, self.name, self.price)

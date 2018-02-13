@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shiptrader',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
