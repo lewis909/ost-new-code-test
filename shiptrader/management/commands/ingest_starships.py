@@ -1,7 +1,7 @@
 import requests
 
 from testsite.settings import STARSHIP_API_URL
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from shiptrader.models import Starship
 
 
@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
                 if type(ship['hyperdrive_rating']) == str:
                     ship['hyperdrive_rating'] = ship[
-                        'hyperdrive_rating'].replace(',', '')
+                        'hyperdrive_rating'].replace(',', '.')
                 if type(ship['cargo_capacity']) == str:
                     ship['cargo_capacity'] = ship[
                         'cargo_capacity'].replace(',', '')
@@ -48,6 +48,15 @@ class Command(BaseCommand):
                 if type(ship['length']) == str:
                     ship['length'] = ship[
                         'length'].replace(',', '')
+
+                # Check Starship is not already ingested
+                starship = Starship.objects.filter(
+                    starship_class=ship['model'],
+                    manufacturer=ship['manufacturer']
+                )
+
+                if starship:
+                    continue
 
                 Starship.objects.create(
                     starship_class=ship['model'],
