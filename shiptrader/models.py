@@ -20,6 +20,8 @@ class Listing(models.Model):
     name = models.CharField(max_length=255)
     ship_type = models.ForeignKey(Starship, related_name='listings')
     price = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return "{}-{}-{}".format(self.pk, self.name, self.price)
