@@ -38,6 +38,7 @@ class ListingsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=255)
     ship_type = StarshipSerializer()
     price = serializers.IntegerField()
+    active = serializers.BooleanField()
 
     class Meta:
         model = Listing
@@ -45,7 +46,8 @@ class ListingsSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'ship_type',
-            'price'
+            'price',
+            'active'
         )
 
     def create(self, validated_data):

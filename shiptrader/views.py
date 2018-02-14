@@ -1,4 +1,3 @@
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,11 +23,16 @@ class ListingsEndPoint(APIView):
 
         if request.GET.get('sort') == 'created' and \
                         request.GET.get('orderby') == 'descending':
-            forsale_listings = Listing.objects.order_by("-{}".format(sort))
+            forsale_listings = Listing.objects.order_by(
+                "-{}".format(sort)
+            ).filter(active=True)
         elif request.GET.get('sort') == 'created':
-            forsale_listings = Listing.objects.order_by("{}".format(sort))
+            forsale_listings = Listing.objects.order_by(
+                "{}".format(sort)
+            ).filter(active=True)
         else:
-            forsale_listings = Listing.objects.select_related()
+            forsale_listings = Listing.objects.select_related().filter(
+                active=True)
 
         serializer = ListingsSerializer(forsale_listings, many=True)
 
