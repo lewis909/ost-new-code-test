@@ -28,12 +28,15 @@ class StarshipSerializer(serializers.ModelSerializer):
 
         )
 
+    def create(self, validated_data):
+        return Starship.objects.create(**validated_data)
 
-class listingsSerializer(serializers.ModelSerializer):
+
+class ListingsSerializer(serializers.ModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
-    ship_type = serializers.PrimaryKeyRelatedField(queryset=Starship.objects.all())
+    ship_type = StarshipSerializer()
     price = serializers.IntegerField()
 
     class Meta:
@@ -44,3 +47,12 @@ class listingsSerializer(serializers.ModelSerializer):
             'ship_type',
             'price'
         )
+
+    def create(self, validated_data):
+        starship_data = validated_data.pop('ship_type', None)
+        if starship_data:
+            ship = Starship.objects.get(starship_class=starship_data['starship_class'])
+            validated_data['ship_type'] = ship
+
+            return Listing.objects.create(**validated_data)
+

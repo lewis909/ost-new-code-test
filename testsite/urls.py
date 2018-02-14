@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from shiptrader.views import StarshipEndPoint
+from shiptrader.views import StarshipEndPoint, ListingsEndPoint
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/starships/$', StarshipEndPoint.as_view()),
+    url(r'^api/forsale/$', ListingsEndPoint.as_view()),
 ]
