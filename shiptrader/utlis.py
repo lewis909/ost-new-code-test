@@ -17,7 +17,7 @@ def starship_data_ingest():
         next_page = response.json()['next']
 
         for ship in starships:
-            
+
             if ship['hyperdrive_rating'] == 'unknown':
                 ship['hyperdrive_rating'] = None
             if ship['crew'] == 'unknown':
