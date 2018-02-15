@@ -61,7 +61,7 @@ After you are done, create a release branch in your repo and send us the link.
 ## Documentation
 
 #### Getting Started
-Run in the order
+Run in this order
 * `./manage.py migrate`
 * `./manage.py ingest_starships`
 * `./manage.py runserver 0.0.0.0:8008`
