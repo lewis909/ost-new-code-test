@@ -19,16 +19,16 @@ class StarshipEndPoint(APIView):
 class ListingsEndPoint(APIView):
 
     def get(self, request):
-        sort = request.GET.get('sort')
+        sort_param = request.GET.get('sort')
+        order_param = request.GET.get('orderby')
 
-        if request.GET.get('sort') == 'created' and \
-                        request.GET.get('orderby') == 'descending':
+        if sort_param == 'created' and order_param == 'descending':
             forsale_listings = Listing.objects.order_by(
-                "-{}".format(sort)
+                "-{}".format(sort_param)
             ).filter(active=True)
-        elif request.GET.get('sort') == 'created':
+        elif sort_param == 'created':
             forsale_listings = Listing.objects.order_by(
-                "{}".format(sort)
+                "{}".format(sort_param)
             ).filter(active=True)
         else:
             forsale_listings = Listing.objects.select_related().filter(

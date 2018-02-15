@@ -57,3 +57,10 @@ require.
 * A seller can deactivate and reactivate their listing
 
 After you are done, create a release branch in your repo and send us the link.
+
+## Documentation
+
+#### Data Ingest
+
+To ingest Starship data from `https://swapi.co/api/starships/` run the following `manage.py` command:
+* `manage.py ingest_starships`
