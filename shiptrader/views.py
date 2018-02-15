@@ -1,3 +1,4 @@
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,16 +20,17 @@ class StarshipEndPoint(APIView):
 class ListingsEndPoint(APIView):
 
     def get(self, request):
-        sort = request.GET.get('sort')
+        sort_param = request.GET.get('sort')
+        order_param = request.GET.get('orderby')
 
-        if request.GET.get('sort') == 'created' and \
-                        request.GET.get('orderby') == 'descending':
+        if (sort_param == 'created' or sort_param == 'price') \
+                and order_param == 'descending':
             forsale_listings = Listing.objects.order_by(
-                "-{}".format(sort)
+                "-{}".format(sort_param)
             ).filter(active=True)
-        elif request.GET.get('sort') == 'created':
+        elif sort_param == 'created' or sort_param == 'price':
             forsale_listings = Listing.objects.order_by(
-                "{}".format(sort)
+                "{}".format(sort_param)
             ).filter(active=True)
         else:
             forsale_listings = Listing.objects.select_related().filter(
@@ -45,3 +47,8 @@ class ListingsEndPoint(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ListingDetail(RetrieveUpdateDestroyAPIView):
+
+    queryset = Listing.objects.all()
+    serializer_class = ListingsSerializer
