@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from shiptrader.views import StarshipEndPoint, ListingsEndPoint
+from shiptrader.views import StarshipEndPoint, ListingDetail, ListingsEndPoint
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/starships/$', StarshipEndPoint.as_view()),
     url(r'^api/forsale/$', ListingsEndPoint.as_view()),
+    url(r'^api/forsale/(?P<pk>[0-9]+)/$', ListingDetail.as_view()),
 ]

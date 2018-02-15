@@ -28,9 +28,6 @@ class StarshipSerializer(serializers.ModelSerializer):
 
         )
 
-    def create(self, validated_data):
-        return Starship.objects.create(**validated_data)
-
 
 class ListingsSerializer(serializers.ModelSerializer):
 

@@ -8,5 +8,3 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         starship_data_ingest()
-
-
