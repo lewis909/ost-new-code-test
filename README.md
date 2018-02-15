@@ -60,6 +60,14 @@ After you are done, create a release branch in your repo and send us the link.
 
 ## Documentation
 
+#### Getting Started
+Run in the order
+* `./manage.py migrate`
+* `./manage.py ingest_starships`
+* `./manage.py runserver 0.0.0.0:8008`
+
+Then go to `localhost:8008/api/starships/`
+
 #### Data Ingest
 
 To ingest Starship data from `https://swapi.co/api/starships/` run the following `manage.py` command:
