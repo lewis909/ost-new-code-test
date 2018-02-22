@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from shiptrader.models import Listing, Starship
+
+admin.site.register(Listing)
+admin.site.register(Starship)

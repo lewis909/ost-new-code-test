@@ -57,3 +57,110 @@ require.
 * A seller can deactivate and reactivate their listing
 
 After you are done, create a release branch in your repo and send us the link.
+
+## Documentation
+
+#### Getting Started
+Run in this order
+* `./manage.py migrate`
+* `./manage.py ingest_starships`
+* `./manage.py runserver 0.0.0.0:8008`
+
+Then go to `localhost:8008/api/starships/`
+
+#### Data Ingest
+
+To ingest Starship data from `https://swapi.co/api/starships/` run the following `manage.py` command:
+* `manage.py ingest_starships`
+
+#### Endpoints
+
+ * `/api/forsale/` returns all listing items.
+ * `/api/forsale/{id}/` returns the detail view for a listing.
+ * `/api/starshops/` returns all Starship classes from the data ingest.
+
+#### Creating a Listing
+`/api/forsale/` excepts the `POST` method:
+
+Request:
+        
+    {
+        "name": "Quicksilver",
+        "ship_type": {
+            "starship_class": "Theta-class T-2c shuttle",
+            "manufacturer": "Cygnus Spaceworks",
+            "length": 18.5,
+            "hyperdrive_rating": 1.0,
+            "cargo_capacity": 50000,
+            "crew": 5,
+            "passengers": 16
+        },
+        "price": 10
+    }
+Response = 201 Created
+
+To alter a resources field you can use the `PATCH` method on teh listing ID endpoint, for example:
+
+Request:
+`PATCH /api/forsale/6/`
+
+    {
+        "price": 200
+    }
+    
+Response = 200 OK:
+
+    {
+    "id": 6,
+    "name": "zlook",
+    "ship_type": {
+        "id": 856,
+        "starship_class": "H-type Nubian yacht",
+        "manufacturer": "Theed Palace Space Vessel Engineering Corps",
+        "length": 47.9,
+        "hyperdrive_rating": 0.9,
+        "cargo_capacity": 0,
+        "crew": 4,
+        "passengers": 0
+    },
+    "price": 200,
+    "active": true
+    }
+    
+#### How To Deactivate/Activate A Listing
+Request:
+`PATCH /api/forsale/6/`
+
+    {
+            "active": false
+    }
+    
+Response = 200 OK:
+
+    {
+    "id": 6,
+    "name": "zlook",
+    "ship_type": {
+        "id": 856,
+        "starship_class": "H-type Nubian yacht",
+        "manufacturer": "Theed Palace Space Vessel Engineering Corps",
+        "length": 47.9,
+        "hyperdrive_rating": 0.9,
+        "cargo_capacity": 0,
+        "crew": 4,
+        "passengers": 0
+    },
+    "price": 200,
+    "active": false
+    }
+    
+
+#### Endpoint Params
+
+The `/api/forsale/` endpoint returns all Starships which have been put up for sale.
+It can be ordered by passing the following params:
+##### Sorting
+* To sort by listing creation date use `/api/forsale/?sort=created`. This returns all items in accending order.
+* To sort by price use `/api/forsale/?sort=price`. This returns all items in accending order.
+##### Ordering
+* To get descending results use the `orderby=` param like this `/api/forsale/?sort=created&orderby=descending`
